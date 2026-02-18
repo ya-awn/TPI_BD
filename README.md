@@ -1,84 +1,54 @@
-TFI - Bases de Datos I
-Gestión de Empresas y Domicilios Fiscales
-Alumno: Kenyi Meza
-Comisión: 17
-Motor: MariaDB / MySQL 8+
-Materia: Bases de Datos I
+# TFI — Bases de Datos I
 
-📌 Descripción
-Este trabajo final integrador implementa una base de datos relacional para administrar empresas y sus domicilios fiscales, contemplando:
+**Tema:** Gestión de Empresas y Domicilios Fiscales  \
+**Alumno:** Kenyi Meza (Comisión 17)  \
+**Motor:** MariaDB (probado en Linux) / compatible con MySQL 8+
 
-Catálogos geográficos (país, provincia, localidad)
-Tipos de domicilio
-Restricciones (PK, FK, UNIQUE, CHECK)
-Carga masiva de datos
-Consultas complejas y optimización con índices
-Vistas
-Seguridad (usuarios/roles)
-Transacciones
-Concurrencia (bloqueos y comportamiento del motor)
-🧩 Modelo (DER)
-El diagrama entidad-relación fue generado a partir del esquema SQL y documentado en formato gráfico.
+## ¿De qué trata?
+Este trabajo implementa una base de datos relacional para registrar **empresas** y sus **domicilios fiscales**, apoyándose en catálogos (país/provincia/localidad y tipo de domicilio). La idea es tener una estructura consistente, con integridad referencial y consultas que representen casos reales.
 
-Archivo: DER.png
-📂 Estructura del repositorio
-01_esquema.sql → creación de base de datos + tablas + restricciones
-02_catalogos.sql → carga de catálogos (país/provincia/localidad/tipo)
-03_carga_masiva.sql → carga masiva (adaptada para MariaDB)
-04_indices.sql → índices de optimización (con IF NOT EXISTS en MariaDB)
-05_consultas.sql → consultas requeridas (joins, filtros, agregaciones)
-05_explain.sql → análisis de plan de ejecución (EXPLAIN)
-06_vistas.sql → vistas para simplificar consultas frecuentes
-07_seguridad.sql → usuarios, permisos y roles
-08_transacciones.sql → ejemplos de COMMIT / ROLLBACK
-09_concurrencia_guiada.sql → pruebas guiadas de concurrencia/bloqueos
-TFI_Analisis_Completo.md → análisis y justificación técnica
-Anexo_IA_Preguntas_y_Respuestas_TFI.docx → anexo de respuestas (uso de IA como apoyo)
-LINK_VIDEO.txt → link al video de presentación
-▶️ Orden recomendado de ejecución
-Idealmente ejecutar en este orden para evitar errores de FK y asegurar consistencia:
+## Qué incluye
+- Modelo relacional con restricciones (`PK`, `FK`, `UNIQUE`, `CHECK`)
+- Carga inicial de catálogos y carga masiva de datos de prueba
+- Consultas con joins/agregaciones y análisis con `EXPLAIN`
+- Índices para mejorar rendimiento
+- Vistas para simplificar consultas repetidas
+- Seguridad (usuarios/permisos)
+- Transacciones (COMMIT/ROLLBACK)
+- Concurrencia (bloqueos / lock wait timeout con dos sesiones)
 
-01_esquema.sql
-02_catalogos.sql
-03_carga_masiva.sql
-04_indices.sql
-06_vistas.sql
-05_consultas.sql y 05_explain.sql
-07_seguridad.sql
-08_transacciones.sql
-09_concurrencia_guiada.sql (requiere 2 sesiones/conexiones)
-🔁 Concurrencia (importante)
-Las pruebas de concurrencia se ejecutan en dos sesiones distintas (dos pestañas/conexiones), para simular accesos simultáneos y observar:
+## Archivos principales
+- `01_esquema.sql` → creación de DB y tablas + restricciones
+- `02_catalogos.sql` → carga de catálogos
+- `03_carga_masiva.sql` → carga masiva (adaptada para MariaDB)
+- `04_indices.sql` → creación de índices
+- `05_consultas.sql` → consultas solicitadas
+- `05_explain.sql` → `EXPLAIN` para ver planes de ejecución
+- `06_vistas.sql` → vistas
+- `07_seguridad.sql` → usuarios/roles/permisos
+- `08_transacciones.sql` → ejemplos de transacciones
+- `09_concurrencia_guiada.sql` → prueba guiada de concurrencia
+- `DER.png` → diagrama ER
+- `TFI_Analisis_Completo.md` → explicación/justificación del diseño
+- `Anexo_IA_Preguntas_y_Respuestas_TFI.docx` → anexo de respuestas
+- `LINK_VIDEO.txt` → link a la presentación
 
-bloqueos (locks)
-espera por bloqueo
-lock wait timeout (si corresponde)
-🛠️ Notas de compatibilidad (MariaDB vs MySQL)
-Durante el desarrollo se contemplaron diferencias reales entre motores.
-Por ejemplo:
+## Orden recomendado de ejecución
+1. `01_esquema.sql`
+2. `02_catalogos.sql`
+3. `03_carga_masiva.sql`
+4. `04_indices.sql`
+5. `06_vistas.sql`
+6. `05_consultas.sql` + `05_explain.sql`
+7. `07_seguridad.sql`
+8. `08_transacciones.sql`
+9. `09_concurrencia_guiada.sql` *(se ejecuta con 2 conexiones/sesiones)*
 
-Carga masiva: se evitó depender de CTEs recursivos en INSERT si el motor/versión no lo soporta igual.
-Índices: se utilizó CREATE INDEX IF NOT EXISTS, que puede aparecer como “warning” en algunos editores, pero es válido en MariaDB.
-🎥 Video de presentación
-El link al video está en:
+## Nota sobre concurrencia
+La parte de concurrencia está pensada para correrla en **dos sesiones** (dos pestañas o dos clientes). La idea es ver cómo se comporta el motor cuando una transacción deja un registro bloqueado y la otra intenta modificarlo.
 
-LINK_VIDEO.txt
-🤖 Uso de IA (de forma asistida)
-Se utilizó IA como apoyo para:
+## Video
+Presentación en YouTube: https://www.youtube.com/watch?v=x7CyJGg8EJ0
 
-validar estructura del DER y cardinalidades
-mejorar redacción/documentación técnica
-proponer mejoras de scripts sin reemplazar el criterio del diseño
-El trabajo final, decisiones y scripts fueron revisados y adaptados manualmente para el motor utilizado.
-
-✅ Requisitos cubiertos (resumen)
- Modelo relacional con restricciones
- Carga de datos + carga masiva
- Consultas complejas
- Índices + análisis con EXPLAIN
- Vistas
- Seguridad (roles/permisos)
- Transacciones
- Concurrencia
-📬 Observaciones
-Si se corre en un entorno distinto (otra versión de MySQL/MariaDB), puede requerir ajustes menores por diferencias de sintaxis o configuración del servidor.
+## Nota sobre el uso de IA (muy leve)
+Se usó IA como apoyo puntual para revisar redacción/documentación y validar ideas generales, pero el diseño del modelo y la adaptación de los scripts al motor (MariaDB) se realizó y verificó manualmente.
