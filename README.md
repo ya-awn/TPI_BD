@@ -50,5 +50,3 @@ La parte de concurrencia está pensada para correrla en **dos sesiones** (dos pe
 ## Video
 Presentación en YouTube: https://www.youtube.com/watch?v=x7CyJGg8EJ0
 
-## Nota sobre el uso de IA (muy leve)
-Se usó IA como apoyo puntual para revisar redacción/documentación y validar ideas generales, pero el diseño del modelo y la adaptación de los scripts al motor (MariaDB) se realizó y verificó manualmente.
